@@ -12,12 +12,12 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                 registry.addMapping("/**")
-               .allowedOrigins("http://localhost:3000")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // add OPTIONS
-                    .allowedHeaders("*")
-                    .exposedHeaders("Authorization") // allow browser to read token if needed
-                    .allowCredentials(true);
+                registry.addMapping("/**")
+                        .allowedOrigins("http://health-coach-application-frontend-l.vercel.app")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // add OPTIONS
+                        .allowedHeaders("*")
+                        .exposedHeaders("Authorization") // allow browser to read token if needed
+                        .allowCredentials(true);
             }
         };
     }
