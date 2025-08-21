@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .requestMatchers("/user/login", "/user/register").permitAll()
                 // Keep existing allowed endpoints
                 .requestMatchers("/api/auth/**", "/public/**", "/swagger-ui/**").permitAll()
+                    .requestMatchers("/application/dashboard/**").hasAnyRole("APPLICANT", "ADMIN")
                 .requestMatchers("/user/addReviewer").permitAll() // For testing only // only admin can add reviewers
                 // Everything else requires authentication
                 .anyRequest().authenticated()
