@@ -30,10 +30,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
+                   .userDetailsService(userDetailsService)
+                   .passwordEncoder(passwordEncoder)
+                   .and()
+                   .build();
     }
 
     @Bean
@@ -41,23 +41,22 @@ public class SecurityConfig {
         JwtAuthenticationFilter jwtFilter = new JwtAuthenticationFilter(jwtUtil, userDetailsService);
 
         http
-                .csrf().disable()
-                .cors() // ✅ enable CORS
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests()
+            .csrf().disable()
+            .cors() // ✅ enable CORS
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeHttpRequests()
                 // Allow login & register without authentication
                 .requestMatchers("/user/login", "/user/register").permitAll()
                 // Keep existing allowed endpoints
                 .requestMatchers("/api/auth/**", "/public/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/user/addReviewer").permitAll() // For testing only // only admin can add reviewers
-               .requestMatchers("/application/submit/**").hasAuthority("APPLICANT")
                 // Everything else requires authentication
                 .anyRequest().authenticated()
-                .and()
-                // Add JWT filter before UsernamePasswordAuthenticationFilter
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            .and()
+            // Add JWT filter before UsernamePasswordAuthenticationFilter
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -66,8 +65,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://health-coach-application-frontend-l.vercel.app")); // frontend
-                                                                                                                 // origin
+        configuration.setAllowedOrigins(Arrays.asList("https://health-coach-application-frontend-l.vercel.app")); // frontend origin
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
         configuration.setAllowCredentials(true);

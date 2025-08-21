@@ -52,12 +52,13 @@ public ResponseEntity<String> getApplicationStatus(@PathVariable Long userId) {
   
     // submit the application form
    
-    @PostMapping("/submit/{userId}")
-    @PreAuthorize("hasAuthority('APPLICANT')")
-    public Application submitApplication(@PathVariable Long userId, @RequestBody Application application) {
-          System.out.println("✅ Received application: " + application);
-        return appser.submitApplication(userId, application);
-    }
+  @PostMapping("/submit/{userId}")
+@PreAuthorize("hasRole('APPLICANT')")
+public Application submitApplication(@PathVariable Long userId, @RequestBody Application application) {
+    System.out.println("✅ Received application: " + application);
+    return appser.submitApplication(userId, application);
+}
+
 
     
     // Get Application by ID with DTO
